@@ -1,6 +1,6 @@
 {
-  "name": "cordova-plugin-honeywell-aidc",
-  "version": "1.0.1",
+  "name": "cordova-plugin-honeywell-scanner",
+  "version": "0.0.1",
   "description": "The follwing code initializes the barcode reader Call one time at application startup",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/S5Consulting/cordova-plugin-honeywell-aidc.git"
+    "url": "git+https://github.com/apellicc/cordova-plugin-honeywell-scanner.git"
   },
   "author": "pelliccia.armando@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/S5Consulting/cordova-plugin-honeywell-aidc/issues"
+    "url": "https://github.com/apellicc/cordova-plugin-honeywell-scanner/issues"
   },
-  "homepage": "https://github.com/S5Consulting/cordova-plugin-honeywell-aidc#readme"
+  "homepage": "https://github.com/apellicc/cordova-plugin-honeywell-scanner#readme"
 }

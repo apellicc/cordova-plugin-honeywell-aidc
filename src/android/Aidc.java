@@ -2,6 +2,7 @@ package com.lexitgroup.honeywell;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -14,6 +15,7 @@ import com.honeywell.aidc.AidcManager;
 import com.honeywell.aidc.AidcManager.CreatedCallback;
 import com.honeywell.aidc.BarcodeFailureEvent;
 import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReaderInfo;
 import com.honeywell.aidc.BarcodeReader;
 import com.honeywell.aidc.BarcodeReader.BarcodeListener;
 import com.honeywell.aidc.ScannerUnavailableException;
@@ -39,7 +41,7 @@ public class Aidc extends CordovaPlugin implements BarcodeListener {
 				@Override
 				public void onCreated(AidcManager aidcManager) {
 					manager = aidcManager;
-					barcodeReader = manager.createBarcodeReader();
+					barcodeReader = manager.createBarcodeReader("dcs.scanner.ring");
 
 					if (barcodeReader != null) {
 
@@ -151,6 +153,41 @@ public class Aidc extends CordovaPlugin implements BarcodeListener {
 			}
 
 			callbackContext.success();
+
+			return true;
+		} else if ("listConnectedBarcodeDevices".equals(action)) {
+			currentCallbackContext = callbackContext;
+			Log.d(TAG, "listConnectedBarcodeDevices");
+
+			AidcManager.create(this.cordova.getActivity(), new CreatedCallback() {
+
+				@Override
+				public void onCreated(AidcManager aidcManager) {
+					List<BarcodeReaderInfo> list = aidcManager.listConnectedBarcodeDevices();
+
+					Log.e(TAG, "list");
+
+					String[] devices = new String[list.size()];
+					int index = 0;
+					
+					for (BarcodeReaderInfo value : list) {
+						devices[index] = (String) value.getName();
+						index++;
+					}
+
+					try {
+					JSONObject obj = new JSONObject();
+					obj.put("devices", new JSONArray(devices));
+
+					PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+					result.setKeepCallback(true);
+					currentCallbackContext.sendPluginResult(result);
+
+					} catch (Exception x) {
+						Log.e(TAG, x.getMessage());
+					}
+				}
+			});
 
 			return true;
 		}

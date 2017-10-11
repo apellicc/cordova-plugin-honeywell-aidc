@@ -31,6 +31,10 @@ var Aidc = function() {
 	this.disableTrigger = function (success_cb, error_cb) {
 		exec(success_cb, error_cb, "HoneywellAidc", "disableTrigger", []);
 	};
+
+	this.listConnectedBarcodeDevices = function (success_cb, error_cb) {
+		exec(success_cb, error_cb, "HoneywellAidc", "listConnectedBarcodeDevices", []);
+	}
 };
 
 Aidc.prototype._success = function (barcode) {
